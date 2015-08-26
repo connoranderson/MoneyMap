@@ -42,7 +42,7 @@
 				<header>
 					<h2>Balanced</h2>
 					<p>
-						Factors in your market return, tax brackets, home appreciation, salary increase, and other parameters.
+						Factors in your market return, tax brackets, home appreciation, <br /> salary increase, and other parameters.
 					</p>
 				</header>
 				<form name="analyze" action="analyze_balanced.php" id='analyze' onsubmit="return validateForm()" method="post">
@@ -129,7 +129,9 @@
 							<h3> Investment Return </h3>
 							
 								<div class="6u 12u$(xsmall)">
-									<input type="text" name="investment" id="investment" value="" placeholder="0.06" required/>
+									<span title="Enter percentage value without percentage sign.">
+									<input type="text" name="investment" id="investment" value="" placeholder="6%" required/>
+								</span>
 								
 							</div>
 						</div>
