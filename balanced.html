@@ -42,7 +42,7 @@
 				<header>
 					<h2>Balanced</h2>
 					<p>
-						Control your market return, investment strategy, tax brackets, and other parameters.
+						Factors in your market return, tax brackets, home appreciation, salary increase, and other parameters.
 					</p>
 				</header>
 				<form name="analyze" action="analyze_balanced.php" id='analyze' onsubmit="return validateForm()" method="post">
@@ -122,28 +122,17 @@
 									<input type="text" name="monthly_spending" id="monthly_spending" value="" placeholder="$2,000 / mo" required/>
 								
 							</div>
-							<p> <h1> <br></p><br>
+		
 						</div>
 
-						<section>
-							<h3> Investment Strategy</h3>
-							<center>
-								<div class="row uniform">
-									<div class="4u 12u$(large)">
-										<input type="radio" id="investment-agg" name="investment" value='agg' checked>
-										<label for="investment-agg">Aggressive (10% yearly growth)</label>
-									</div>
-									<div class="4u 12u$(large)">
-										<input type="radio" id="investment-bal" name="investment" value='bal'>
-										<label for="investment-bal">Market Average (6% yearly growth)</label>
-									</div>
-									<div class="4u$ 12u$(large)">
-										<input type="radio" id="investment-low" name="investment" value='low'>
-										<label for="investment-low">Playing it Safe (2% yearly growth)</label>
-									</div>
-								</div>
-							</center>
-						</section>
+						<div class="row uniform">
+							<h3> Investment Return </h3>
+							
+								<div class="6u 12u$(xsmall)">
+									<input type="text" name="investment" id="investment" value="" placeholder="0.06" required/>
+								
+							</div>
+						</div>
 
 						<p></p><br>
 
