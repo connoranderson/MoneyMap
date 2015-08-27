@@ -39,13 +39,13 @@
 		<!-- Main -->
 		<article id="main">
 			
-				<header>
-					<h2>Balanced</h2>
-					<p>
-						Factors in your market return, tax brackets, home appreciation, <br /> salary increase, and other parameters.
-					</p>
-				</header>
-				<form name="analyze" action="analyze_balanced.php" id='analyze' onsubmit="return validateForm()" method="post">
+			<header>
+				<h2>Balanced</h2>
+				<p>
+					Factors in your market return, tax brackets, home appreciation, <br /> salary increase, and other parameters.
+				</p>
+			</header>
+			<form name="analyze" action="analyze_balanced.php" id='analyze' onsubmit="return validateForm()" method="post">
 				<section class="wrapper style5">
 
 					<div class="inner">
@@ -65,8 +65,8 @@
 						<div class="row uniform">
 							<h3> Current Age</h3>
 							
-								<div class="6u 12u$(xsmall)">
-									<input type="text" name="start" id="start" value="" placeholder="21" required/>
+							<div class="6u 12u$(xsmall)">
+								<input type="text" name="start" id="start" value="" placeholder="21" required/>
 								
 							</div>
 							
@@ -77,8 +77,8 @@
 						<div class="row uniform">
 							<h3> Retirement Age</h3>
 							
-								<div class="6u 12u$(xsmall)">
-									<input type="text" name="retirement" id="retirement" value="" placeholder="65" required/>
+							<div class="6u 12u$(xsmall)">
+								<input type="text" name="retirement" id="retirement" value="" placeholder="65" required/>
 								
 							</div>
 							
@@ -88,8 +88,20 @@
 						<div class="row uniform">
 							<h3> Starting Salary</h3>
 							
-								<div class="6u 12u$(xsmall)">
-									<input type="text" name="salary" id="salary" value="" placeholder="$60,000" required/>
+							<div class="6u 12u$(xsmall)">
+								<input type="text" name="salary" id="salary" value="" placeholder="$60,000" required/>
+								
+							</div>
+							
+						</div>
+
+						<div class="row uniform">
+							<h3> Salary Annual Increase </h3>
+
+							<div class="6u 12u$(xsmall)">
+								<span title="Average annual salary increase in US is 2.9%">
+									<input type="text" name="salary_appreciation" id="salary_appreciation" value="" placeholder="2.9%" required/>
+								</span>
 								
 							</div>
 							
@@ -99,8 +111,8 @@
 
 							<span title="Assumes 3.77% interest rate"><h3> Desired House Cost</h3></span>
 							
-								<div class="6u 12u$(xsmall)">
-									<span title="Mortgage assumed at 3.77% interest rate">
+							<div class="6u 12u$(xsmall)">
+								<span title="Mortgage assumed at 3.77% interest rate">
 									<input type="text" name="house_cost" id="house_cost" value="" placeholder="$400,000" />
 								</span>							
 								
@@ -108,10 +120,49 @@
 						</div>
 
 						<div class="row uniform">
+
+							<span title="Case-Schiller Index of existing home appreciation"><h3> Annual Home Appreciation</h3></span>
+							
+							<div class="6u 12u$(xsmall)">
+								<span title="Case-Schiller Index of existing home appreciation">
+									<input type="text" name="house_appreciation" id="house_appreciation" value="" placeholder="3.4%" />
+								</span>	
+								<br>						
+								
+							</div>						
+						</div>
+
+						<div class="6u$ 12u$(small)">
+							<input type="checkbox" id="homeowners_tax" name="homeowners_tax">
+							<label for="homeowners_tax"> Include homeowners taxes</label>
+							<br> <br>
+						</div>
+
+						<div id="homeowner_expanded" style="display:none;" >
+							<div class="form-group">
+								<p> Homeowners insurance: 0.3% annual <br>
+									Property tax: 1% annual
+								</p>
+							</div>
+						</div>
+
+						<script type="text/javascript">
+						var checkbox = document.getElementById('homeowners_tax');
+						var delivery_div = document.getElementById('homeowner_expanded');
+						checkbox.onclick = function() {
+							if(this.checked) {
+								delivery_div.style['display'] = 'block';
+							} else {
+								delivery_div.style['display'] = 'none';
+							}
+						};
+						</script>
+
+						<div class="row uniform">
 							<h3> Rent Cost Per Month</h3>
 							
-								<div class="6u 12u$(xsmall)">
-									<input type="text" name="rent" id="rent" value="" placeholder="$1,500 / mo" required/>
+							<div class="6u 12u$(xsmall)">
+								<input type="text" name="rent" id="rent" value="" placeholder="$1,500 / mo" required/>
 								
 							</div>
 						</div>
@@ -119,17 +170,17 @@
 						<div class="row uniform">
 							<h3> Monthly Spending Level</h3>
 							<div class="6u 12u$(xsmall)">
-									<input type="text" name="monthly_spending" id="monthly_spending" value="" placeholder="$2,000 / mo" required/>
+								<input type="text" name="monthly_spending" id="monthly_spending" value="" placeholder="$2,000 / mo" required/>
 								
 							</div>
-		
+
 						</div>
 
 						<div class="row uniform">
 							<h3> Investment Return </h3>
 							
-								<div class="6u 12u$(xsmall)">
-									<span title="Enter percentage value without percentage sign.">
+							<div class="6u 12u$(xsmall)">
+								<span title="Enter value as percentage">
 									<input type="text" name="investment" id="investment" value="" placeholder="6%" required/>
 								</span>
 								
@@ -188,6 +239,7 @@
 	<script src="assets/js/util.js"></script>
 	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 	<script src="assets/js/main.js"></script>
+	<script src="assets/js/toggleCheckbox.js"></script>
 
 </body>
 </html>
