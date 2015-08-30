@@ -62,6 +62,21 @@
 							</header>
 						</center>
 
+						
+						<div class="row uniform">
+							<div align="center">
+								<div class="6u$ 12u$(small)">
+									<span style="white-space: nowrap;"> 
+										<input type="checkbox" id="default_values" name="default_values">
+										<label for="default_values"> <h3>Autofill form with national average values </h3></label>
+									</span>
+									<br> 
+								</div>
+							</div>
+						</div>
+
+
+
 						<div class="row uniform">
 							<h3> Current Age</h3>
 							
@@ -96,7 +111,7 @@
 						</div>
 
 						<div class="row uniform">
-							<h3> Salary Annual Increase </h3>
+							<h3> Salary Annual Increase (%)</h3>
 
 							<div class="6u 12u$(xsmall)">
 								<span title="Average annual salary increase in US is 2.9%">
@@ -121,7 +136,7 @@
 
 						<div class="row uniform">
 
-							<span title="Case-Schiller Index of existing home appreciation"><h3> Annual Home Appreciation</h3></span>
+							<span title="Case-Schiller Index of existing home appreciation"><h3> Annual Home Appreciation (%)</h3></span>
 							
 							<div class="6u 12u$(xsmall)">
 								<span title="Case-Schiller Index of existing home appreciation">
@@ -134,8 +149,8 @@
 
 						<div class="6u$ 12u$(small)">
 							<input type="checkbox" id="homeowners_tax" name="homeowners_tax">
-							<label for="homeowners_tax"> Include homeowners taxes</label>
-							<br> <br>
+							<label for="homeowners_tax"> <h3>Include homeowners taxes </h3></label>
+							<br> 
 						</div>
 
 						<div id="homeowner_expanded" style="display:none;" >
@@ -155,6 +170,23 @@
 							} else {
 								delivery_div.style['display'] = 'none';
 							}
+						};
+
+
+						var checkbox = document.getElementById('default_values');
+						checkbox.onclick = function() {
+							if(this.checked) {
+								document.getElementById("start").value = "21";
+								document.getElementById("retirement").value = "62";
+								document.getElementById("salary").value = "50500";
+								document.getElementById("salary_appreciation").value = "2.9";
+								document.getElementById("house_cost").value = "188900";
+								document.getElementById("house_appreciation").value = "3.4";
+								document.getElementById("homeowners_tax").checked = true;
+								document.getElementById("rent").value = "962";
+								document.getElementById("monthly_spending").value = "2820";
+								document.getElementById("investment").value = "6";
+							} 
 						};
 						</script>
 
@@ -176,16 +208,19 @@
 
 						</div>
 
+
 						<div class="row uniform">
-							<h3> Investment Return </h3>
-							
+
+							<h3> Investment Return (%)</h3>
+
 							<div class="6u 12u$(xsmall)">
 								<span title="Enter value as percentage">
-									<input type="text" name="investment" id="investment" value="" placeholder="6%" required/>
+									<input type="text" name="investment" id="investment" value="" placeholder="6%" style='width:100px;' required/>
 								</span>
-								
 							</div>
+
 						</div>
+
 
 						<p></p><br>
 

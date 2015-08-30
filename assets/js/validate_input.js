@@ -3,7 +3,8 @@ function validateForm() {
 	var elements = document.getElementById("analyze").elements;
 	for(var i = 0; i < elements.length; i++)
 	{
-		if (isNaN(elements[i].value) && elements[i].getAttribute('type').toLowerCase() != "radio" && elements[i].getAttribute('type').toLowerCase() != "submit") {
+		if (isNumeric(elements[i].value) && elements[i].getAttribute('type').toLowerCase() != "radio" && elements[i].getAttribute('type').toLowerCase() != "submit") {
+			alert(elements[i].getAttribute('name').toLowerCase());
 			alert("Make sure you are submitting valid numbers!");
 			return false;
 		}
@@ -17,4 +18,8 @@ function validateForm() {
 	}
 
 	return true;
+}
+
+function isNumeric(n) {
+  return !isNaN(partseInt(n) || parseFloat(n)) && isFinite(n);
 }
