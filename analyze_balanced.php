@@ -56,10 +56,12 @@
 							var start_age = parseInt("<?php echo $_POST["start"] ?>");
 							var retirement_age = parseInt("<?php echo $_POST["retirement"] ?>");
 							var starting_salary = parseInt("<?php echo $_POST["salary"] ?>");
+							var salary_appreciation = parseFloat("<?php echo $_POST["salary_appreciation"] ?>")/100;
 							var house_cost = parseInt("<?php echo $_POST["house_cost"] ?>");
 							var rent = parseInt("<?php echo $_POST["rent"] ?>");
 							var monthly_spending = parseInt("<?php echo $_POST["monthly_spending"] ?>");
-							var investment_strategy = "<?php echo $_POST["investment"] ?>";
+							var investment = parseFloat("<?php echo $_POST["investment"] ?>");
+							marketRate = investment / 100; // Value entered is a percentage
 							var years = [];
 							var duration = retirement_age-start_age; // Iterate 1 to final age							
 
@@ -69,24 +71,17 @@
 
 
 
-							function analyze(start_age) {
-								var duration = retirement_age-start_age; // Iterate 1 to final age
+							function analyze() {
 								var netWorth = [];
 								var mortgage = [];
+								var salary = [];
 								var interest = 0;
-								var marketRate = 0;
 								var hasPurchased = 0;
 								netWorth[0] = 0;
+								salary[0] = starting_salary;
 								var housePaidOffYear = 999;
 								var housePurchasedYear = 999;
 
-								if (investment_strategy == 'agg'){
-									marketRate = 0.1;
-								}else if(investment_strategy == 'bal'){
-									marketRate = 0.06;
-								}else{
-									marketRate = 0.02;
-								}
 
 
 								for (var i = 0; i < duration; i++) {
@@ -94,15 +89,16 @@
 										netWorth[i] = 0;
 										mortgage[0] = house_cost;
 									}else{
+										salary[i] = salary[i-1]*(1+salary_appreciation);
 
 										if (netWorth[i-1] > mortgage[i-1]*0.2 && hasPurchased == 0){
 											hasPurchased = 1;
 											housePurchasedYear = i+start_age;
-											netWorth[i] = netWorth[i-1] - mortgage[i-1]*0.2 + netWorth[i-1]*marketRate + starting_salary - monthly_spending - rent;
+											netWorth[i] = netWorth[i-1] - mortgage[i-1]*0.2 + netWorth[i-1]*marketRate + salary[i] - monthly_spending - rent;
 											mortgage[i] = mortgage[i-1] - mortgage[i-1]*0.2;
 										}else if(hasPurchased == 1 && mortgage[i-1] > 0){ //assumes while you pay off house, you don't invest
 											var interest = mortgage[i-1] * 0.0377; // average mortgage rate
-											mortgage[i] = mortgage[i-1] - starting_salary + monthly_spending +interest;
+											mortgage[i] = mortgage[i-1] - salary[i] + monthly_spending +interest;
 											netWorth[i] = netWorth[i-1] + netWorth[i-1]*marketRate;
 											if(mortgage[i] < 0){
 												mortgage[i] = 0;
@@ -110,10 +106,10 @@
 
 										}else if(hasPurchased == 1){ //if house is payed off, you don't pay rent
 										housePaidOffYear = i + start_age;
-										netWorth[i] = netWorth[i-1] + netWorth[i-1]*marketRate + starting_salary - monthly_spending;
+										netWorth[i] = netWorth[i-1] + netWorth[i-1]*marketRate + salary[i] - monthly_spending;
 										mortgage[i] = mortgage[i-1];
 									}else{
-										netWorth[i] = netWorth[i-1]+ netWorth[i-1]*marketRate + starting_salary - monthly_spending - rent;
+										netWorth[i] = netWorth[i-1]+ netWorth[i-1]*marketRate + salary[i] - monthly_spending - rent;
 										mortgage[i] = mortgage[i-1];
 									}
 								}
@@ -125,10 +121,11 @@
 							out[0] = years;
 							out[1] = netWorth;
 							out[2] = mortgage;
+							out[3] = salary;
 
 							return out;
 						}
-						var output = analyze(start_age,retirement_age,starting_salary,house_cost,rent,monthly_spending,investment_strategy);
+						var output = analyze();
 						var orderOfMagnitude = 1;
 
 						while(orderOfMagnitude > 0){
@@ -196,7 +193,7 @@
 							labels : years,
 							datasets : [
 							{
-								label: "Net Worth",
+								label: "Mortgage",
 								fillColor : "rgba(172,194,132,0.4)",
 								strokeColor : "#ACC26D",
 								pointColor : "#fff",
@@ -228,8 +225,57 @@
 
 					<hr />
 
-					<h4>More Results</h4>
-					<p> Consider running a more advanced search next time to take into account taxes, mortgage interest rates, and other data for a more accurate and comprehensive analysis!</p>
+
+					<center><h3>Salary Over Time</h3></center>
+					<h3 id = 'ylabel'>Salary</h3>
+					<script src="Chart.min.js"></script>
+					<canvas id="salaryID" width="1200" height="600"></canvas>
+
+					<script type="text/javascript">
+						var data3 = {
+							labels : years,
+							datasets : [
+							{
+								label: "Salary",
+								fillColor : "rgba(172,194,132,0.4)",
+								strokeColor : "#ACC26D",
+								pointColor : "#fff",
+								pointStrokeColor : "#9DB86D",
+								data : output[3],
+							},
+							]
+						};
+
+						var myChart = document.getElementById('myChart').getContext('2d');
+						var mortgageChart = document.getElementById('mortgageID').getContext('2d');
+						var salaryChart = document.getElementById('salaryID').getContext('2d');
+
+
+
+						window.onload = function(){
+						    
+						    new Chart(myChart).Line(data1,{
+							responsive: true,
+							multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
+							});		
+
+						    new Chart(mortgageChart).Line(data2,{
+							responsive: true,
+							multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
+							});	
+
+							new Chart(salaryChart).Line(data3,{
+							responsive: true,
+							multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
+							});	
+						}
+
+					</script>
+					<center><h3>Age</h3></center>
+
+					<hr />
+
+					
 				</div>
 			</section>
 		</article>
