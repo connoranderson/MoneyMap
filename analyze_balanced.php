@@ -58,12 +58,23 @@
 							var starting_salary = parseInt("<?php echo $_POST["salary"] ?>");
 							var salary_appreciation = parseFloat("<?php echo $_POST["salary_appreciation"] ?>")/100;
 							var house_cost = parseInt("<?php echo $_POST["house_cost"] ?>");
+							var house_appreciation = parseFloat("<?php echo $_POST["house_appreciation"] ?>")/100;
 							var rent = parseInt("<?php echo $_POST["rent"] ?>");
 							var monthly_spending = parseInt("<?php echo $_POST["monthly_spending"] ?>");
 							var investment = parseFloat("<?php echo $_POST["investment"] ?>");
+							var homeownersTax = "<?php echo $_POST["homeowners_tax"] ?>"; // checkbox "on" or "off"
 							marketRate = investment / 100; // Value entered is a percentage
 							var years = [];
-							var duration = retirement_age-start_age; // Iterate 1 to final age							
+							var duration = retirement_age-start_age; // Iterate 1 to final age	
+							var homeownersInsurance = 0;
+							var propertyTax = 0;
+
+							
+
+							if (homeownersTax == 'on'){
+								homeownersInsurance = 0.003;
+								propertyTax = .01;
+							}						
 
 							for (var i = 0; i < duration; i++) {
 								years[i] = i + start_age;
@@ -73,45 +84,66 @@
 
 							function analyze() {
 								var netWorth = [];
+								var investment = [];
 								var mortgage = [];
 								var salary = [];
+								var house_value = [];
 								var interest = 0;
 								var hasPurchased = 0;
-								netWorth[0] = 0;
+								var home_equity = []
+								investment[0] = 0;
 								salary[0] = starting_salary;
+								house_value[0] = house_cost;
+								home_equity[0] = 0;
 								var housePaidOffYear = 999;
 								var housePurchasedYear = 999;
+								var interest = 0;
 
 
 
 								for (var i = 0; i < duration; i++) {
 									if (i==0){
+										investment[i] = 0;
+										mortgage[i] = 0;
 										netWorth[i] = 0;
-										mortgage[0] = house_cost;
 									}else{
 										salary[i] = salary[i-1]*(1+salary_appreciation);
 
-										if (netWorth[i-1] > mortgage[i-1]*0.2 && hasPurchased == 0){
+										if (investment[i-1] > house_cost*0.2 && hasPurchased == 0){ // just purchased house
 											hasPurchased = 1;
 											housePurchasedYear = i+start_age;
-											netWorth[i] = netWorth[i-1] - mortgage[i-1]*0.2 + netWorth[i-1]*marketRate + salary[i] - monthly_spending - rent;
-											mortgage[i] = mortgage[i-1] - mortgage[i-1]*0.2;
+											
+											investment[i] = investment[i-1] - house_cost*0.2 + investment[i-1]*marketRate + salary[i] - monthly_spending - rent - (propertyTax + homeownersInsurance)*house_value[i-1];
+											mortgage[i] = house_cost*0.8;
+											house_value[i] = house_value[i-1];
+											home_equity[i] = house_value[i] - mortgage[i];
+
 										}else if(hasPurchased == 1 && mortgage[i-1] > 0){ //assumes while you pay off house, you don't invest
-											var interest = mortgage[i-1] * 0.0377; // average mortgage rate
-											mortgage[i] = mortgage[i-1] - salary[i] + monthly_spending +interest;
-											netWorth[i] = netWorth[i-1] + netWorth[i-1]*marketRate;
+											interest = mortgage[i-1] * 0.0377; // average mortgage rate
+											mortgage[i] = mortgage[i-1] - salary[i] + monthly_spending +interest + (propertyTax+homeownersInsurance)*house_value[i-1];
+											investment[i] = investment[i-1]*(1+marketRate);
 											if(mortgage[i] < 0){
 												mortgage[i] = 0;
 											}
+											house_value[i] = house_value[i-1]*(1+house_appreciation);
+											home_equity[i] = house_value[i] - mortgage[i];
 
 										}else if(hasPurchased == 1){ //if house is payed off, you don't pay rent
+										
 										housePaidOffYear = i + start_age;
-										netWorth[i] = netWorth[i-1] + netWorth[i-1]*marketRate + salary[i] - monthly_spending;
+										investment[i] = investment[i-1] + investment[i-1]*marketRate + salary[i] - monthly_spending - (propertyTax + homeownersInsurance)*house_value[i-1];
 										mortgage[i] = mortgage[i-1];
-									}else{
-										netWorth[i] = netWorth[i-1]+ netWorth[i-1]*marketRate + salary[i] - monthly_spending - rent;
+										house_value[i] = house_value[i-1]*(1+house_appreciation);
+										home_equity[i] = house_value[i];
+									}else{ // saving for house
+										investment[i] = investment[i-1]*(1+marketRate) + salary[i] - monthly_spending - rent;
 										mortgage[i] = mortgage[i-1];
+										house_value[i] = house_value[i-1];
+										home_equity[i] = home_equity[i-1];
 									}
+						
+									netWorth[i] = investment[i] - mortgage[i] + house_value[i];
+									
 								}
 
 
@@ -122,11 +154,14 @@
 							out[1] = netWorth;
 							out[2] = mortgage;
 							out[3] = salary;
+							out[4] = house_value;
 
 							return out;
 						}
 						var output = analyze();
 						var orderOfMagnitude = 1;
+
+						
 
 						while(orderOfMagnitude > 0){
 							if(output[1][duration-1]/(Math.pow(10,orderOfMagnitude)) < 10){
