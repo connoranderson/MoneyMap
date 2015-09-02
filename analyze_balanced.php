@@ -141,7 +141,7 @@
 										house_value[i] = house_value[i-1];
 										home_equity[i] = home_equity[i-1];
 									}
-						
+
 									netWorth[i] = investment[i] - mortgage[i] + house_value[i];
 									
 								}
@@ -154,7 +154,7 @@
 							out[1] = netWorth;
 							out[2] = mortgage;
 							out[3] = salary;
-							out[4] = house_value;
+							out[4] = home_equity;
 
 							return out;
 						}
@@ -192,21 +192,47 @@
 
 						var precision = 3;
 
+						// output = roundToPrecision(output, precision);
+
+						// function roundToPrecision(output, precision){
+
+						// 	orderOfMagnitudes = [];
+						// 	for (var i = 0; i < output[i].length ; i++){
+						// 		orderOfMagnitudes[i] = 1;
+						// 		while(orderOfMagnitudes[i] > 0){
+						// 			if(output[i][output[i].length-1]/(Math.pow(10,orderOfMagnitudes[i])) < 10){
+						// 				break;
+						// 			}else{
+						// 				orderOfMagnitudes[i] += 1;
+						// 			}
+						// 		}
+						// 		for(var j=0; j<output[i].length; j++) {
+						// 			output[i][j] /= Math.pow(10,orderOfMagnitude-precision);
+						// 			output[i][j] = Math.round(output[i][j]);
+						// 			output[i][j] /= Math.pow(10,precision);
+						// 		}	
+						// 	}
+						// 	return output;
+						// }
+
 						for(var i=0; i<output[1].length; i++) {
 							output[1][i] /= Math.pow(10,orderOfMagnitude-precision);
 							output[1][i] = Math.round(output[1][i]);
 							output[1][i] /= Math.pow(10,precision);
-						}	
+						}
+
 
 						var data1 = {
 							labels : years,
 							datasets : [
 							{
 								label: "Net Worth",
-								fillColor : "rgba(172,194,132,0.4)",
-								strokeColor : "#ACC26D",
-								pointColor : "#fff",
-								pointStrokeColor : "#9DB86D",
+								fillColor : "rgba(58,172,178,0.4)",
+								pointColor: "#fff",
+								pointStrokeColor: "#fff",
+								pointHighlightFill: "#fff",
+								pointHighlightStroke: "rgba(58,172,178,0.4)",
+								pointStrokeColor: "rgba(58,172,178,0.4)",
 								data : output[1],
 							},
 							]
@@ -224,36 +250,21 @@
 					<canvas id="mortgageID" width="1200" height="600"></canvas>
 
 					<script type="text/javascript">
-						var data2 = {
-							labels : years,
-							datasets : [
-							{
-								label: "Mortgage",
-								fillColor : "rgba(172,194,132,0.4)",
-								strokeColor : "#ACC26D",
-								pointColor : "#fff",
-								pointStrokeColor : "#9DB86D",
-								data : output[2],
-							},
-							]
-						};
-
-						var myChart = document.getElementById('myChart').getContext('2d');
-						var mortgageChart = document.getElementById('mortgageID').getContext('2d');
-
-
-						window.onload = function(){
-						    
-						    new Chart(myChart).Line(data1,{
-							responsive: true,
-							multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
-							});		
-
-						    new Chart(mortgageChart).Line(data2,{
-							responsive: true,
-							multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
-							});	
-						}
+					var data2 = {
+						labels : years,
+						datasets : [
+						{
+							label: "Mortgage",
+							fillColor : "rgba(255,103,42,0.4)",
+							pointColor: "#fff",
+							pointStrokeColor: "#fff",
+							pointHighlightFill: "#fff",
+							pointHighlightStroke: "rgba(255,103,42,0.8)",
+							pointStrokeColor: "rgba(255,103,42,0.8)",
+							data : output[2],
+						},
+						]
+					};
 
 					</script>
 					<center><h3>Age</h3></center>
@@ -267,43 +278,78 @@
 					<canvas id="salaryID" width="1200" height="600"></canvas>
 
 					<script type="text/javascript">
-						var data3 = {
-							labels : years,
-							datasets : [
-							{
-								label: "Salary",
-								fillColor : "rgba(172,194,132,0.4)",
-								strokeColor : "#ACC26D",
-								pointColor : "#fff",
-								pointStrokeColor : "#9DB86D",
-								data : output[3],
-							},
-							]
-						};
+					var data3 = {
+						labels : years,
+						datasets : [
+						{
+							label: "Salary",
+							fillColor : "rgba(58,172,178,0.4)",
+							pointColor: "#fff",
+							pointStrokeColor: "#fff",
+							pointHighlightFill: "#fff",
+							pointHighlightStroke: "rgba(58,172,178,0.4)",
+							pointStrokeColor: "rgba(58,172,178,0.4)",
+							data : output[3],
+						},
+						]
+					};
 
-						var myChart = document.getElementById('myChart').getContext('2d');
-						var mortgageChart = document.getElementById('mortgageID').getContext('2d');
-						var salaryChart = document.getElementById('salaryID').getContext('2d');
+					</script>
+					<center><h3>Age</h3></center>
+
+					<hr />
+
+					<center><h3>Home Equity</h3></center>
+					<h3 id = 'ylabel'>Equity</h3>
+					<script src="Chart.min.js"></script>
+					<canvas id="homeEquityID" width="1200" height="600"></canvas>
+
+					<script type="text/javascript">
+					var data4 = {
+						labels : years,
+						datasets : [
+						{
+							label: "Salary",
+							fillColor : "rgba(255,103,42,0.4)",
+							pointColor: "#fff",
+							pointStrokeColor: "#fff",
+							pointHighlightFill: "#fff",
+							pointHighlightStroke: "rgba(255,103,42,0.8)",
+							pointStrokeColor: "rgba(255,103,42,0.8)",
+							data : output[4],
+						},
+						]
+					};
+
+					var myChart = document.getElementById('myChart').getContext('2d');
+					var mortgageChart = document.getElementById('mortgageID').getContext('2d');
+					var salaryChart = document.getElementById('salaryID').getContext('2d');
+					var equityChart = document.getElementById('homeEquityID').getContext('2d');
 
 
 
-						window.onload = function(){
-						    
-						    new Chart(myChart).Line(data1,{
+					window.onload = function(){
+
+						new Chart(myChart).Line(data1,{
 							responsive: true,
 							multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
-							});		
+						});		
 
-						    new Chart(mortgageChart).Line(data2,{
+						new Chart(mortgageChart).Line(data2,{
 							responsive: true,
 							multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
-							});	
+						});	
 
-							new Chart(salaryChart).Line(data3,{
+						new Chart(salaryChart).Line(data3,{
 							responsive: true,
 							multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
-							});	
-						}
+						});	
+
+						new Chart(equityChart).Line(data4,{
+							responsive: true,
+							multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
+						});	
+					}
 
 					</script>
 					<center><h3>Age</h3></center>
