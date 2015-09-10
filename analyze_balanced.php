@@ -88,6 +88,7 @@
 							};
 
 							
+							
 							function analyze() {
 								var netWorth = [];
 								var investment = [];
@@ -173,7 +174,7 @@
 						var output = analyze();
 						var orderOfMagnitude = 1;
 						maxElem = Math.max.apply(Math,output[1]);
-    					orderOfMagnitude = Math.floor(Math.log(maxElem) / Math.LN10 + 0.000000001);
+						orderOfMagnitude = Math.floor(Math.log(maxElem) / Math.LN10 + 0.000000001);
 
 						if (orderOfMagnitude == 1){
 							document.getElementById("ylabel").innerHTML = 'Value (Tens of Dollars)';
