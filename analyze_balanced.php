@@ -169,6 +169,7 @@
 							out[3] = salary;
 							out[4] = home_equity;
 							out[5] = afterTaxIncomeArr;
+							out[6] = investment;
 
 							return out;
 						}
@@ -212,6 +213,7 @@
 								pointHighlightStroke: "rgba(58,172,178,0.4)",
 								pointStrokeColor: "rgba(58,172,178,0.4)",
 								data : output[1],
+
 							},
 							]
 						};						
@@ -309,10 +311,39 @@
 						]
 					};
 
+					</script>
+					<center><h3>Age</h3></center>
+
+					<hr />
+
+					<center><h3>Final Asset Allocation</h3></center>
+					<!-- <h3 id = 'ylabel'>Salary</h3> -->
+					<script src="Chart.min.js"></script>
+					<canvas id="assetAllocationID" width="1200" height="600"></canvas>
+
+					<script type="text/javascript">
+					var data5 = [
+					{
+						value: output[4][output[4].length-1],
+						color:"rgba(255,103,42,0.8)",
+						highlight: "rgba(255,103,42,0.4)",
+						label: "Home Equity"
+					},
+					{
+						value: output[6][output[6].length-1],
+						color: "rgba(58,172,178,0.8)",
+						highlight: "rgba(58,172,178,0.4)",
+						label: "Market Investment"
+					}
+					];
+
+					
+
 					var myChart = document.getElementById('myChart').getContext('2d');
 					var mortgageChart = document.getElementById('mortgageID').getContext('2d');
 					var salaryChart = document.getElementById('salaryID').getContext('2d');
 					var equityChart = document.getElementById('homeEquityID').getContext('2d');
+					var assetAllocationChart = document.getElementById('assetAllocationID').getContext('2d');
 
 
 
@@ -337,10 +368,13 @@
 							responsive: true,
 							multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
 						});	
+
+						new Chart(assetAllocationChart).Doughnut(data5,{
+							responsive: true,
+						});
 					}
 
 					</script>
-					<center><h3>Age</h3></center>
 
 					<hr />
 
