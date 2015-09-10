@@ -1,7 +1,7 @@
 To do:
 
 - Handle commas, dollar signs, and percent signs in input DONE
-- KNOWN ISSUE: FORM VALIDATION
+- Known Issue: form validation FIXED
 - Dropdowns with instructions under parameter inputs
 - Graph colors DONE
 - Build sophisticated.html
@@ -9,3 +9,5 @@ To do:
 - Find a better way to handle individual expenses
 - Incorporate percentage of salary toward house payments, instead of all available cash
 - Round all data fields to two decimal places DONE
+- Pie chart of final asset allocation
+- Variable mortgage interest rate
