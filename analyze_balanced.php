@@ -86,6 +86,69 @@
 								years[i] = i + start_age;
 							};
 
+							function afterTaxIncome(income, taxStatus) {
+								if(taxStatus == 1){
+									if(income < 9225){
+										income = income - 0.1*income;
+									}else if (income < 37450){
+										income = income - 922.5 - 0.15*(income-9225);
+									}else if (income < 90750){
+										income = income -  5156.25 - 0.25*(income-37450);
+									}else if (income < 189300){
+										income = income - 18481 -  0.28*(income-90750);
+									}else if (income < 411500){
+										income = income - 46075 -  0.33*(income-189300);
+									}else if (income < 413200){
+										income = income - 199401 -  0.35*(income-411500);
+									}else {
+										income = income - 199996 -  0.396*(income-413200);
+									}
+
+
+								}else if(taxStatus == 2){
+
+									if(income < 18450){
+										income = income - 0.1*income;
+									}else if (income < 74900){
+										income = income - 1845 - 0.15*(income-18450);
+									}else if (income < 151200){
+										income = income -  10312 - 0.25*(income-74900);
+									}else if (income < 230450){
+										income = income - 29387-  0.28*(income-151200);
+									}else if (income < 411500){
+										income = income - 51577 -  0.33*(income-230450);
+									}else if (income < 464850){
+										income = income - 111324 -  0.35*(income-411500);
+									}else {
+										income = income - 129996 -  0.396*(income-464850);
+									}
+
+								}else{
+
+
+									if(income < 9225){
+										income = income - 0.1*income;
+									}else if (income < 37450){
+										income = income - 922.5 - 0.15*(income-9225);
+									}else if (income < 75600){
+										income = income -  5156.25 - 0.25*(income-37450);
+									}else if (income < 115225){
+										income = income - 14693 -  0.28*(income-75600);
+									}else if (income < 205750){
+										income = income - 25788 -  0.33*(income-115225);
+									}else if (income < 232425){
+										income = income - 55662-  0.35*(income-205750);
+									}else {
+										income = income - 64998 -  0.396*(income-232425);
+									}
+
+
+
+								}
+
+
+								return income;
+							}
 
 
 							function analyze() {
@@ -94,6 +157,7 @@
 								var mortgage = [];
 								var salary = [];
 								var house_value = [];
+								var afterTaxIncomeArr = [];
 								var interest = 0;
 								var hasPurchased = 0;
 								var home_equity = []
@@ -108,25 +172,28 @@
 
 
 								for (var i = 0; i < duration; i++) {
+
 									if (i==0){
 										investment[i] = 0;
 										mortgage[i] = 0;
 										netWorth[i] = 0;
+										afterTaxIncomeArr[i] = afterTaxIncome(starting_salary,tax_status);
 									}else{
 										salary[i] = salary[i-1]*(1+salary_appreciation);
+										afterTaxIncomeArr[i] = afterTaxIncome(salary[i],tax_status);
 
 										if (investment[i-1] > house_cost*0.2 && hasPurchased == 0){ // just purchased house
 											hasPurchased = 1;
 											housePurchasedYear = i+start_age;
 											
-											investment[i] = investment[i-1] - house_cost*0.2 + investment[i-1]*marketRate + salary[i] - monthly_spending - rent - (propertyTax + homeownersInsurance)*house_value[i-1];
+											investment[i] = investment[i-1] - house_cost*0.2 + investment[i-1]*marketRate + afterTaxIncomeArr[i] - monthly_spending - rent - (propertyTax + homeownersInsurance)*house_value[i-1];
 											mortgage[i] = house_cost*0.8;
 											house_value[i] = house_value[i-1];
 											home_equity[i] = house_value[i] - mortgage[i];
 
 										}else if(hasPurchased == 1 && mortgage[i-1] > 0){ //assumes while you pay off house, you don't invest
 											interest = mortgage[i-1] * 0.0377; // average mortgage rate
-											mortgage[i] = mortgage[i-1] - salary[i] + monthly_spending +interest + (propertyTax+homeownersInsurance)*house_value[i-1];
+											mortgage[i] = mortgage[i-1] - afterTaxIncomeArr[i] + monthly_spending +interest + (propertyTax+homeownersInsurance)*house_value[i-1];
 											investment[i] = investment[i-1]*(1+marketRate);
 											if(mortgage[i] < 0){
 												mortgage[i] = 0;
@@ -137,12 +204,12 @@
 										}else if(hasPurchased == 1){ //if house is payed off, you don't pay rent
 										
 										housePaidOffYear = i + start_age;
-										investment[i] = investment[i-1] + investment[i-1]*marketRate + salary[i] - monthly_spending - (propertyTax + homeownersInsurance)*house_value[i-1];
+										investment[i] = investment[i-1] + investment[i-1]*marketRate + afterTaxIncomeArr[i] - monthly_spending - (propertyTax + homeownersInsurance)*house_value[i-1];
 										mortgage[i] = mortgage[i-1];
 										house_value[i] = house_value[i-1]*(1+house_appreciation);
 										home_equity[i] = house_value[i];
 									}else{ // saving for house
-										investment[i] = investment[i-1]*(1+marketRate) + salary[i] - monthly_spending - rent;
+										investment[i] = investment[i-1]*(1+marketRate) + afterTaxIncomeArr[i] - monthly_spending - rent;
 										mortgage[i] = mortgage[i-1];
 										house_value[i] = house_value[i-1];
 										home_equity[i] = home_equity[i-1];
@@ -161,6 +228,7 @@
 							out[2] = mortgage;
 							out[3] = salary;
 							out[4] = home_equity;
+							out[5] = afterTaxIncomeArr;
 
 							return out;
 						}
@@ -275,6 +343,16 @@
 							pointStrokeColor: "rgba(58,172,178,0.4)",
 							data : output[3],
 						},
+						{
+							label: "After Tax Income",
+							fillColor : "rgba(255,103,42,0.4)",
+							pointColor: "#fff",
+							pointStrokeColor: "#fff",
+							pointHighlightFill: "#fff",
+							pointHighlightStroke: "rgba(255,103,42,0.8)",
+							pointStrokeColor: "rgba(255,103,42,0.8)",
+							data : output[5],
+						},
 						]
 					};
 
@@ -362,7 +440,6 @@
 	</div>
 
 	<!-- Scripts -->
-	<script src="assets/js/validate_input.js"></script>
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/jquery.scrollex.min.js"></script>
 	<script src="assets/js/jquery.scrolly.min.js"></script>
