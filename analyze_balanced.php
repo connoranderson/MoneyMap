@@ -23,10 +23,7 @@
 						<div id="menu">
 							<ul>
 								<li><a href="index.html">Home</a></li>
-								<li><a href="generic.html">Generic</a></li>
-								<li><a href="elements.html">Elements</a></li>
-								<li><a href="#">Sign Up</a></li>
-								<li><a href="#">Log In</a></li>
+								<li><a href="form.html">Getting Started</a></li>
 							</ul>
 						</div>
 					</li>
@@ -51,6 +48,7 @@
 						<h3 id = 'ylabel'>Y Label</h3>
 						<canvas id="myChart" width="1200" height="600"></canvas>
 
+						<!-- Primary Javascript Scripting -->
 						<script type="text/javascript">
 							// Load relevant variables
 							var start_age = parseInt("<?php echo $_POST["start"] ?>");
@@ -63,11 +61,23 @@
 							var monthly_spending = parseInt("<?php echo $_POST["monthly_spending"] ?>");
 							var investment = parseFloat("<?php echo $_POST["investment"] ?>");
 							var homeownersTax = "<?php echo $_POST["homeowners_tax"] ?>"; // checkbox "on" or "off"
+							var tax_status_input = "<?php echo $_POST["tax_status"] ?>";
 							marketRate = investment / 100; // Value entered is a percentage
 							var years = [];
 							var duration = retirement_age-start_age; // Iterate 1 to final age	
 							var homeownersInsurance = 0;
 							var propertyTax = 0;
+							var tax_status = 0;
+
+							if (tax_status == 'ind'){
+								tax_status = 1;
+							}else if(investment_strategy == 'tog'){
+								tax_status = 2;
+							}else{
+								tax_status = 3;
+							}
+
+							document.write(tax_status_name);
 
 							
 
@@ -192,28 +202,6 @@
 
 						var precision = 3;
 
-						// output = roundToPrecision(output, precision);
-
-						// function roundToPrecision(output, precision){
-
-						// 	orderOfMagnitudes = [];
-						// 	for (var i = 0; i < output[i].length ; i++){
-						// 		orderOfMagnitudes[i] = 1;
-						// 		while(orderOfMagnitudes[i] > 0){
-						// 			if(output[i][output[i].length-1]/(Math.pow(10,orderOfMagnitudes[i])) < 10){
-						// 				break;
-						// 			}else{
-						// 				orderOfMagnitudes[i] += 1;
-						// 			}
-						// 		}
-						// 		for(var j=0; j<output[i].length; j++) {
-						// 			output[i][j] /= Math.pow(10,orderOfMagnitude-precision);
-						// 			output[i][j] = Math.round(output[i][j]);
-						// 			output[i][j] /= Math.pow(10,precision);
-						// 		}	
-						// 	}
-						// 	return output;
-						// }
 
 						for(var i=0; i<output[1].length; i++) {
 							output[1][i] /= Math.pow(10,orderOfMagnitude-precision);
@@ -378,6 +366,7 @@
 	</div>
 
 	<!-- Scripts -->
+	<script src="assets/js/validate_input.js"></script>
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/jquery.scrollex.min.js"></script>
 	<script src="assets/js/jquery.scrolly.min.js"></script>
