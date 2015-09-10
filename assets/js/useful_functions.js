@@ -82,3 +82,33 @@ function roundToPrecision(data,precision){
   return data;
 }
 
+function correctIntInput(input){
+  input = input.replace(/\$/g, '');
+  input = input.replace(/,/g , '');
+  return input;
+}
+
+
+function correctPercentageInput(input){
+  if(input.indexOf("%") != -1){
+    input = input.replace('%', '');
+    var input_double = parseFloat(input)/100;
+    input = input_double.toString();
+  }else if(parseFloat(input)>1){
+    var input_double = parseFloat(input)/100;
+    input = input_double.toString();
+  }              
+  return input;
+}
+
+function processNum(input){
+  input = correctIntInput(input);
+  output = parseFloat(input);
+  return output;
+}
+
+function processPercentage(input){
+  input = correctPercentageInput(input);
+  output = parseFloat(input);
+  return output;
+}

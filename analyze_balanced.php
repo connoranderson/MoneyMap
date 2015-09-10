@@ -52,18 +52,20 @@
 						<script src="assets/js/useful_functions.js"></script>
 						<script type="text/javascript">
 							// Load relevant variables
-							var start_age = parseInt("<?php echo $_POST["start"] ?>");
-							var retirement_age = parseInt("<?php echo $_POST["retirement"] ?>");
-							var starting_salary = parseInt("<?php echo $_POST["salary"] ?>");
-							var salary_appreciation = parseFloat("<?php echo $_POST["salary_appreciation"] ?>")/100;
-							var house_cost = parseInt("<?php echo $_POST["house_cost"] ?>");
-							var house_appreciation = parseFloat("<?php echo $_POST["house_appreciation"] ?>")/100;
-							var rent = parseInt("<?php echo $_POST["rent"] ?>");
-							var monthly_spending = parseInt("<?php echo $_POST["monthly_spending"] ?>");
-							var investment = parseFloat("<?php echo $_POST["investment"] ?>");
+
+							var start_age = processNum("<?php echo $_POST["start"] ?>");
+							var retirement_age = processNum("<?php echo $_POST["retirement"] ?>");
+							var starting_salary = processNum("<?php echo $_POST["salary"] ?>");
+							var salary_appreciation = processPercentage("<?php echo $_POST["salary_appreciation"] ?>"); // Value entered is a percentage
+							var house_cost = processNum("<?php echo $_POST["house_cost"] ?>");
+							var house_appreciation = processPercentage("<?php echo $_POST["house_appreciation"] ?>"); // Value entered is a percentage
+							var rent = processNum("<?php echo $_POST["rent"] ?>");
+							var monthly_spending = processNum("<?php echo $_POST["monthly_spending"] ?>");
+							var investment = processPercentage("<?php echo $_POST["investment"] ?>");// Value entered is a percentage
 							var homeownersTax = "<?php echo $_POST["homeowners_tax"] ?>"; // checkbox "on" or "off"
 							var tax_status_input = "<?php echo $_POST["tax_status"] ?>";
-							marketRate = investment / 100; // Value entered is a percentage
+
+							marketRate = investment; // Value entered is a percentage
 							var years = [];
 							var duration = retirement_age-start_age; // Iterate 1 to final age	
 							var homeownersInsurance = 0;

@@ -1,5 +1,4 @@
 function validateForm() {
-  alert("Validation Started");
 
 	var elements = document.getElementById("analyze").elements;
 
@@ -21,7 +20,7 @@ function validateForm() {
 	return true;
 }
 function isNumeric(n) {
-  n = correctPercentageInput(correctIntInput(n)); // Turns numbers with dollar signs or percentage signs into regular doubles
+  n = correctPercentageInput(correctIntInput(n)); // Allows commas and percentage signs in form data
   return (!isNaN(parseInt(n) || parseFloat(n)) && isFinite(n));
 }
 
@@ -36,12 +35,6 @@ function correctPercentageInput(input){
   if(input.indexOf("%") != -1)
   {
     input = input.replace('%', '');
-    var input_double = parseFloat(input)/100;
-    input = input_double.toString();
-  }
-  // else if(parseFloat(input) >= 1){
-  //   var input_double = parseFloat(input)/100;
-  //   input = input_double.toString();
-  // }               
+  }              
   return input;
 }
