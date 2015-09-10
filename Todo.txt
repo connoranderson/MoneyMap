@@ -1,0 +1,10 @@
+To do:
+
+- Handle commas, dollar signs, and percent signs in input
+- Dropdowns with instructions under parameter inputs
+- Graph colors
+- Build sophisticated.html
+- Build analyze_sophisticated.php
+- Find a better way to handle individual expenses
+- Incorporate percentage of salary toward house payments, instead of all available cash
+- Round all data fields to two decimal places

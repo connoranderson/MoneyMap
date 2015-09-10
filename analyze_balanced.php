@@ -49,6 +49,7 @@
 						<canvas id="myChart" width="1200" height="600"></canvas>
 
 						<!-- Primary Javascript Scripting -->
+						<script src="assets/js/useful_functions.js"></script>
 						<script type="text/javascript">
 							// Load relevant variables
 							var start_age = parseInt("<?php echo $_POST["start"] ?>");
@@ -86,71 +87,7 @@
 								years[i] = i + start_age;
 							};
 
-							function afterTaxIncome(income, taxStatus) {
-								if(taxStatus == 1){
-									if(income < 9225){
-										income = income - 0.1*income;
-									}else if (income < 37450){
-										income = income - 922.5 - 0.15*(income-9225);
-									}else if (income < 90750){
-										income = income -  5156.25 - 0.25*(income-37450);
-									}else if (income < 189300){
-										income = income - 18481 -  0.28*(income-90750);
-									}else if (income < 411500){
-										income = income - 46075 -  0.33*(income-189300);
-									}else if (income < 413200){
-										income = income - 199401 -  0.35*(income-411500);
-									}else {
-										income = income - 199996 -  0.396*(income-413200);
-									}
-
-
-								}else if(taxStatus == 2){
-
-									if(income < 18450){
-										income = income - 0.1*income;
-									}else if (income < 74900){
-										income = income - 1845 - 0.15*(income-18450);
-									}else if (income < 151200){
-										income = income -  10312 - 0.25*(income-74900);
-									}else if (income < 230450){
-										income = income - 29387-  0.28*(income-151200);
-									}else if (income < 411500){
-										income = income - 51577 -  0.33*(income-230450);
-									}else if (income < 464850){
-										income = income - 111324 -  0.35*(income-411500);
-									}else {
-										income = income - 129996 -  0.396*(income-464850);
-									}
-
-								}else{
-
-
-									if(income < 9225){
-										income = income - 0.1*income;
-									}else if (income < 37450){
-										income = income - 922.5 - 0.15*(income-9225);
-									}else if (income < 75600){
-										income = income -  5156.25 - 0.25*(income-37450);
-									}else if (income < 115225){
-										income = income - 14693 -  0.28*(income-75600);
-									}else if (income < 205750){
-										income = income - 25788 -  0.33*(income-115225);
-									}else if (income < 232425){
-										income = income - 55662-  0.35*(income-205750);
-									}else {
-										income = income - 64998 -  0.396*(income-232425);
-									}
-
-
-
-								}
-
-
-								return income;
-							}
-
-
+							
 							function analyze() {
 								var netWorth = [];
 								var investment = [];
@@ -186,7 +123,7 @@
 											hasPurchased = 1;
 											housePurchasedYear = i+start_age;
 											
-											investment[i] = investment[i-1] - house_cost*0.2 + investment[i-1]*marketRate + afterTaxIncomeArr[i] - monthly_spending*12 - rent - (propertyTax + homeownersInsurance)*house_value[i-1];
+											investment[i] = investment[i-1] - house_cost*0.2 + investment[i-1]*marketRate + afterTaxIncomeArr[i] - monthly_spending*12 - rent*12 - (propertyTax + homeownersInsurance)*house_value[i-1];
 											mortgage[i] = house_cost*0.8;
 											house_value[i] = house_value[i-1];
 											home_equity[i] = house_value[i] - mortgage[i];
@@ -209,13 +146,14 @@
 										house_value[i] = house_value[i-1]*(1+house_appreciation);
 										home_equity[i] = house_value[i];
 									}else{ // saving for house
-										investment[i] = investment[i-1]*(1+marketRate) + afterTaxIncomeArr[i] - monthly_spending*12 - rent;
+										
+										investment[i] = investment[i-1]*(1+marketRate) + afterTaxIncomeArr[i] - monthly_spending*12 - rent*12;
 										mortgage[i] = mortgage[i-1];
 										house_value[i] = house_value[i-1];
 										home_equity[i] = home_equity[i-1];
 									}
 
-									netWorth[i] = investment[i] - mortgage[i] + house_value[i];
+									netWorth[i] = investment[i] + home_equity[i];
 									
 								}
 
@@ -264,14 +202,38 @@
 							document.getElementById("ylabel").innerHTML = 'Value 10^' + orderOfMagnitude;
 						}
 
-						var precision = 3;
+						// var precision = 3;
 
 
-						for(var i=0; i<output[1].length; i++) {
-							output[1][i] /= Math.pow(10,orderOfMagnitude-precision);
-							output[1][i] = Math.round(output[1][i]);
-							output[1][i] /= Math.pow(10,precision);
+						// for(var i=0; i<output[1].length; i++) {
+						// 	output[1][i] /= Math.pow(10,orderOfMagnitude-precision);
+						// 	output[1][i] = Math.round(output[1][i]);
+						// 	output[1][i] /= Math.pow(10,precision);
+						// }
+
+						function roundToPrecision(data,precision){
+							var orderOfMagnitude = 0;
+
+							for(var i=0; i<data.length; i++) {
+								maxElem = Math.max.apply(Math,data[i]);
+								orderOfMagnitude = Math.floor(Math.log(maxElem) / Math.LN10 + 0.000000001);
+								for(var j=0; j<data[i].length; j++) {
+									if(i != 1){
+										data[i][j] /= Math.pow(10,orderOfMagnitude-precision);
+										data[i][j] = Math.round(data[i][j]);
+										data[i][j] /= Math.pow(10,-(orderOfMagnitude-precision));
+									}else{
+										data[i][j] /= Math.pow(10,orderOfMagnitude-precision);
+										data[i][j] = Math.round(data[i][j]);
+										data[i][j] /= Math.pow(10,precision);
+									}
+								}
+							}
+
+							return data;
 						}
+
+						output = roundToPrecision(output,3);
 
 
 						var data1 = {
