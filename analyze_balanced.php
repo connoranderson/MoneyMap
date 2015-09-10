@@ -172,16 +172,9 @@
 						}
 						var output = analyze();
 						var orderOfMagnitude = 1;
+						maxElem = Math.max.apply(Math,output[1]);
+    					orderOfMagnitude = Math.floor(Math.log(maxElem) / Math.LN10 + 0.000000001);
 
-						
-
-						while(orderOfMagnitude > 0){
-							if(output[1][duration-1]/(Math.pow(10,orderOfMagnitude)) < 10){
-								break;
-							}else{
-								orderOfMagnitude += 1;
-							}
-						}
 						if (orderOfMagnitude == 1){
 							document.getElementById("ylabel").innerHTML = 'Value (Tens of Dollars)';
 						}else if (orderOfMagnitude == 2){
@@ -200,38 +193,7 @@
 							document.getElementById("ylabel").innerHTML = 'Value (Hundred Millions)';
 						}else{
 							document.getElementById("ylabel").innerHTML = 'Value 10^' + orderOfMagnitude;
-						}
-
-						// var precision = 3;
-
-
-						// for(var i=0; i<output[1].length; i++) {
-						// 	output[1][i] /= Math.pow(10,orderOfMagnitude-precision);
-						// 	output[1][i] = Math.round(output[1][i]);
-						// 	output[1][i] /= Math.pow(10,precision);
-						// }
-
-						function roundToPrecision(data,precision){
-							var orderOfMagnitude = 0;
-
-							for(var i=0; i<data.length; i++) {
-								maxElem = Math.max.apply(Math,data[i]);
-								orderOfMagnitude = Math.floor(Math.log(maxElem) / Math.LN10 + 0.000000001);
-								for(var j=0; j<data[i].length; j++) {
-									if(i != 1){
-										data[i][j] /= Math.pow(10,orderOfMagnitude-precision);
-										data[i][j] = Math.round(data[i][j]);
-										data[i][j] /= Math.pow(10,-(orderOfMagnitude-precision));
-									}else{
-										data[i][j] /= Math.pow(10,orderOfMagnitude-precision);
-										data[i][j] = Math.round(data[i][j]);
-										data[i][j] /= Math.pow(10,precision);
-									}
-								}
-							}
-
-							return data;
-						}
+						}						
 
 						output = roundToPrecision(output,3);
 
@@ -241,7 +203,7 @@
 							datasets : [
 							{
 								label: "Net Worth",
-								fillColor : "rgba(58,172,178,0.4)",
+								fillColor : "rgba(58,172,178,0.6)",
 								pointColor: "#fff",
 								pointStrokeColor: "#fff",
 								pointHighlightFill: "#fff",
@@ -269,7 +231,7 @@
 						datasets : [
 						{
 							label: "Mortgage",
-							fillColor : "rgba(255,103,42,0.4)",
+							fillColor : "rgba(255,103,42,0.6)",
 							pointColor: "#fff",
 							pointStrokeColor: "#fff",
 							pointHighlightFill: "#fff",
@@ -307,7 +269,7 @@
 						},
 						{
 							label: "After Tax Income",
-							fillColor : "rgba(255,103,42,0.4)",
+							fillColor : "rgba(255,103,42,0.6)",
 							pointColor: "#fff",
 							pointStrokeColor: "#fff",
 							pointHighlightFill: "#fff",
@@ -334,7 +296,7 @@
 						datasets : [
 						{
 							label: "Salary",
-							fillColor : "rgba(255,103,42,0.4)",
+							fillColor : "rgba(255,103,42,0.6)",
 							pointColor: "#fff",
 							pointStrokeColor: "#fff",
 							pointHighlightFill: "#fff",

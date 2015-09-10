@@ -63,16 +63,21 @@ function afterTaxIncome(income, taxStatus) {
 function roundToPrecision(data,precision){
   var orderOfMagnitude = 0;
 
-  for(var i=0; i<output.length; i++) {
-    for(var j=0; j<output[i].length; j++) {
-      maxElem = Math.max(output[i]);
-      orderOfMagnitude = Math.floor(Math.log(maxElem) / Math.LN10 + 0.000000001);
-
-      output[i][j] /= Math.pow(10,orderOfMagnitude-precision);
-      output[i][j] = Math.round(output[i][j]);
-      output[i][j] /= Math.pow(10,precision);
+  for(var i=0; i<data.length; i++) {
+    maxElem = Math.max.apply(Math,data[i]);
+    orderOfMagnitude = Math.floor(Math.log(maxElem) / Math.LN10 + 0.000000001);
+    for(var j=0; j<data[i].length; j++) {
+      if(i != 1){
+        data[i][j] /= Math.pow(10,orderOfMagnitude-precision);
+        data[i][j] = Math.round(data[i][j]);
+        data[i][j] /= Math.pow(10,-(orderOfMagnitude-precision));
+      }else{
+        data[i][j] /= Math.pow(10,orderOfMagnitude-precision);
+        data[i][j] = Math.round(data[i][j]);
+        data[i][j] /= Math.pow(10,precision);
+      }
     }
   }
 
-  return data
+  return data;
 }
