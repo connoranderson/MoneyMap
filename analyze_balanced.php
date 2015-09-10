@@ -86,8 +86,6 @@
 							for (var i = 0; i < duration; i++) {
 								years[i] = i + start_age;
 							};
-
-							
 							
 							function analyze() {
 								var netWorth = [];

@@ -1,6 +1,7 @@
 To do:
 
-- Handle commas, dollar signs, and percent signs in input
+- Handle commas, dollar signs, and percent signs in input DONE
+- KNOWN ISSUE: FORM VALIDATION
 - Dropdowns with instructions under parameter inputs
 - Graph colors DONE
 - Build sophisticated.html

@@ -82,8 +82,3 @@ function roundToPrecision(data,precision){
   return data;
 }
 
-function correctIntInput(input){
-  input = input.replace(/\$/g, '');
-  input = input.replace(/,/g , '');
-  return input;
-}
