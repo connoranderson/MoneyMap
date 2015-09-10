@@ -63,6 +63,7 @@ function afterTaxIncome(income, taxStatus) {
 
   }else{
 
+
   	if(income < 9225){
   		income = income - 0.1*income;
   	}else if (income < 37450){
@@ -79,7 +80,10 @@ function afterTaxIncome(income, taxStatus) {
   		income = income - 64998 -  0.396*(income-232425);
   	}
 
+
+
   }
+
 
   return income;
 }

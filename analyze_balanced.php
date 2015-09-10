@@ -69,17 +69,13 @@
 							var propertyTax = 0;
 							var tax_status = 0;
 
-							if (tax_status == 'ind'){
+							if (tax_status_input == 'ind'){
 								tax_status = 1;
-							}else if(investment_strategy == 'tog'){
+							}else if(tax_status_input == 'tog'){
 								tax_status = 2;
 							}else{
 								tax_status = 3;
 							}
-
-							document.write(tax_status_name);
-
-							
 
 							if (homeownersTax == 'on'){
 								homeownersInsurance = 0.003;
