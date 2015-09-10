@@ -186,14 +186,14 @@
 											hasPurchased = 1;
 											housePurchasedYear = i+start_age;
 											
-											investment[i] = investment[i-1] - house_cost*0.2 + investment[i-1]*marketRate + afterTaxIncomeArr[i] - monthly_spending - rent - (propertyTax + homeownersInsurance)*house_value[i-1];
+											investment[i] = investment[i-1] - house_cost*0.2 + investment[i-1]*marketRate + afterTaxIncomeArr[i] - monthly_spending*12 - rent - (propertyTax + homeownersInsurance)*house_value[i-1];
 											mortgage[i] = house_cost*0.8;
 											house_value[i] = house_value[i-1];
 											home_equity[i] = house_value[i] - mortgage[i];
 
 										}else if(hasPurchased == 1 && mortgage[i-1] > 0){ //assumes while you pay off house, you don't invest
 											interest = mortgage[i-1] * 0.0377; // average mortgage rate
-											mortgage[i] = mortgage[i-1] - afterTaxIncomeArr[i] + monthly_spending +interest + (propertyTax+homeownersInsurance)*house_value[i-1];
+											mortgage[i] = mortgage[i-1] - afterTaxIncomeArr[i] + monthly_spending*12 +interest + (propertyTax+homeownersInsurance)*house_value[i-1];
 											investment[i] = investment[i-1]*(1+marketRate);
 											if(mortgage[i] < 0){
 												mortgage[i] = 0;
@@ -204,12 +204,12 @@
 										}else if(hasPurchased == 1){ //if house is payed off, you don't pay rent
 										
 										housePaidOffYear = i + start_age;
-										investment[i] = investment[i-1] + investment[i-1]*marketRate + afterTaxIncomeArr[i] - monthly_spending - (propertyTax + homeownersInsurance)*house_value[i-1];
+										investment[i] = investment[i-1] + investment[i-1]*marketRate + afterTaxIncomeArr[i] - monthly_spending*12 - (propertyTax + homeownersInsurance)*house_value[i-1];
 										mortgage[i] = mortgage[i-1];
 										house_value[i] = house_value[i-1]*(1+house_appreciation);
 										home_equity[i] = house_value[i];
 									}else{ // saving for house
-										investment[i] = investment[i-1]*(1+marketRate) + afterTaxIncomeArr[i] - monthly_spending - rent;
+										investment[i] = investment[i-1]*(1+marketRate) + afterTaxIncomeArr[i] - monthly_spending*12 - rent;
 										mortgage[i] = mortgage[i-1];
 										house_value[i] = house_value[i-1];
 										home_equity[i] = home_equity[i-1];
