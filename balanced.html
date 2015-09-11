@@ -149,9 +149,9 @@
 							<span title="Assumes 3.77% interest rate"><h3> Desired House Cost</h3></span>
 
 							<div class="6u 12u$(xsmall)">
-								<span title="Mortgage assumed at 3.77% interest rate">
+								
 									<input type="text" class="number" name="house_cost" id="house_cost" value="" placeholder="$400,000" />
-								</span>							
+														
 								<br>
 							</div>						
 						</div>
@@ -179,6 +179,17 @@
 
 						<div class="row uniform">
 
+							<h3> Mortgage Interest Rate (%)</h3>
+
+							<div class="6u 12u$(xsmall)">
+								
+									<input type="text" class="percentage" name="mortgage_rate" id="mortgage_rate" value="" placeholder="3.77%" />					
+
+							</div>						
+						</div>
+
+						<div class="row uniform">
+
 							<h3> Percentage Downpayment (%)</h3>
 
 							<div class="6u 12u$(xsmall)">
@@ -188,14 +199,16 @@
 							</div>						
 						</div>
 
+						
+
 						<div class="row uniform">
 
-							<span title="Case-Schiller Index of existing home appreciation"><h3> Annual Home Appreciation (%)</h3></span>
+							<h3> Annual Home Appreciation (%)</h3>
 
 							<div class="6u 12u$(xsmall)">
-								<span title="Case-Schiller Index of existing home appreciation">
+						
 									<input type="text" class="percentage" name="house_appreciation" id="house_appreciation" value="" placeholder="3.4%" />
-								</span>	
+					
 								<br>						
 
 							</div>						
@@ -275,6 +288,8 @@
 								document.getElementById("monthly_spending").value = "$2,820";
 								document.getElementById("investment").value = "6%";
 								document.getElementById("downpayment").value = "20%";
+								document.getElementById("mortgage_rate").value = "3.77%";
+								
 							} 
 						};
 						</script>

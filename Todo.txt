@@ -1,13 +1,9 @@
 To do:
 
-- Handle commas, dollar signs, and percent signs in input DONE
-- Known Issue: form validation FIXED
 - Dropdowns with instructions under parameter inputs
-- Graph colors DONE
 - Build sophisticated.html
 - Build analyze_sophisticated.php
 - Find a better way to handle individual expenses
 - Incorporate percentage of salary toward house payments, instead of all available cash
-- Round all data fields to two decimal places DONE
-- Pie chart of final asset allocation DONE
 - Variable mortgage interest rate
+- Better home page images and descriptions
