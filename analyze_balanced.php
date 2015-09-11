@@ -97,7 +97,7 @@
 								var salary = [];
 								var house_value = [];
 								var afterTaxIncomeArr = [];
-								var interest = 0;
+								var interest = [];
 								var hasPurchased = 0;
 								var home_equity = []
 								investment[0] = 0;
@@ -106,7 +106,6 @@
 								home_equity[0] = 0;
 								var housePaidOffYear = 999;
 								var housePurchasedYear = 999;
-								var interest = 0;
 
 
 
@@ -116,6 +115,7 @@
 										investment[i] = 0;
 										mortgage[i] = 0;
 										netWorth[i] = 0;
+										interest[i] = 0;
 										afterTaxIncomeArr[i] = afterTaxIncome(starting_salary,tax_status);
 									}else{
 										salary[i] = salary[i-1]*(1+salary_appreciation);
@@ -129,10 +129,11 @@
 											mortgage[i] = house_cost*0.8;
 											house_value[i] = house_value[i-1];
 											home_equity[i] = house_value[i] - mortgage[i];
+											interest[i] = 0;
 
 										}else if(hasPurchased == 1 && mortgage[i-1] > 0){ //assumes while you pay off house, you don't invest
-											interest = mortgage[i-1] * 0.0377; // average mortgage rate
-											mortgage[i] = mortgage[i-1] - afterTaxIncomeArr[i] + monthly_spending*12 +interest + (propertyTax+homeownersInsurance)*house_value[i-1];
+											interest[i] = mortgage[i-1] * 0.0377; // average mortgage rate
+											mortgage[i] = mortgage[i-1] - afterTaxIncomeArr[i] + monthly_spending*12 +interest[i] + (propertyTax+homeownersInsurance)*house_value[i-1];
 											investment[i] = investment[i-1]*(1+marketRate);
 											if(mortgage[i] < 0){
 												mortgage[i] = 0;
@@ -147,12 +148,14 @@
 										mortgage[i] = mortgage[i-1];
 										house_value[i] = house_value[i-1]*(1+house_appreciation);
 										home_equity[i] = house_value[i];
+										interest[i] = 0;
 									}else{ // saving for house
 										
 										investment[i] = investment[i-1]*(1+marketRate) + afterTaxIncomeArr[i] - monthly_spending*12 - rent*12;
 										mortgage[i] = mortgage[i-1];
 										house_value[i] = house_value[i-1];
 										home_equity[i] = home_equity[i-1];
+										interest[i] = 0;
 									}
 
 									netWorth[i] = investment[i] + home_equity[i];
@@ -170,10 +173,23 @@
 							out[4] = home_equity;
 							out[5] = afterTaxIncomeArr;
 							out[6] = investment;
+							out[7] = interest;
 
 							return out;
 						}
 						var output = analyze();
+
+						function vectorSum(input1, input2){
+							var output1 = [];
+							for(var i = 0; i < input1.length-1 ; i++){
+								output1[i] = input1[i] + input2[i];
+							}
+							return output1;
+						}
+
+						output[8] = vectorSum(output[7], output[2]);
+
+						
 						var orderOfMagnitude = 1;
 						maxElem = Math.max.apply(Math,output[1]);
 						orderOfMagnitude = Math.floor(Math.log(maxElem) / Math.LN10 + 0.000000001);
@@ -224,7 +240,7 @@
 
 					<hr />
 
-					<center><h3>Mortgage Value</h3></center>
+					<center><h3>Mortgage Debt</h3></center>
 					<h3 id = 'ylabel'>Mortgage</h3>
 					<script src="Chart.min.js"></script>
 					<canvas id="mortgageID" width="1200" height="600"></canvas>
@@ -233,6 +249,17 @@
 					var data2 = {
 						labels : years,
 						datasets : [
+
+						{
+							label: "Mortgage + Interest",
+							fillColor : "rgba(58,172,178,0.4)",
+							pointColor: "#fff",
+							pointStrokeColor: "#fff",
+							pointHighlightFill: "#fff",
+							pointHighlightStroke: "rgba(58,172,178,0.8)",
+							pointStrokeColor: "rgba(58,172,178,0.8)",
+							data : output[8],
+						},
 						{
 							label: "Mortgage",
 							fillColor : "rgba(255,103,42,0.6)",
@@ -243,6 +270,7 @@
 							pointStrokeColor: "rgba(255,103,42,0.8)",
 							data : output[2],
 						},
+						
 						]
 					};
 

@@ -9,5 +9,5 @@ To do:
 - Find a better way to handle individual expenses
 - Incorporate percentage of salary toward house payments, instead of all available cash
 - Round all data fields to two decimal places DONE
-- Pie chart of final asset allocation
+- Pie chart of final asset allocation DONE
 - Variable mortgage interest rate

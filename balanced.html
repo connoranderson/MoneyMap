@@ -152,6 +152,38 @@
 								<span title="Mortgage assumed at 3.77% interest rate">
 									<input type="text" class="number" name="house_cost" id="house_cost" value="" placeholder="$400,000" />
 								</span>							
+								<br>
+							</div>						
+						</div>
+
+						<section>
+							<h3> Desired Mortgage Length</h3>
+							<center>
+								<div class="row uniform">
+									<div class="4u 12u$(large)">
+										<input type="radio" id="10year" name="mortgage_length" value='10yr' checked>
+										<label for="10year">10 Years</label>
+									</div>
+									<div class="4u 12u$(large)">
+										<input type="radio" id="20year" name="mortgage_length" value='20yr'>
+										<label for="20year">20 Years</label>
+									</div>
+									<div class="4u$ 12u$(large)">
+										<input type="radio" id="30year" name="mortgage_length" value='30yr'>
+										<label for="30year">30 Years</label>
+									</div>
+								</div>
+							</center>
+							<br>
+						</section>
+
+						<div class="row uniform">
+
+							<h3> Percentage Downpayment (%)</h3>
+
+							<div class="6u 12u$(xsmall)">
+								
+									<input type="text" class="percentage" name="downpayment" id="downpayment" value="" placeholder="20%" />					
 
 							</div>						
 						</div>
@@ -242,6 +274,7 @@
 								document.getElementById("rent").value = "$962";
 								document.getElementById("monthly_spending").value = "$2,820";
 								document.getElementById("investment").value = "6%";
+								document.getElementById("downpayment").value = "20%";
 							} 
 						};
 						</script>
@@ -275,13 +308,14 @@
 						    clearTimeout(typingTimer);
 						    if ($input.val) {
 						        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+
 						    }
 						});
 
 						//user is "finished typing," do something
 						function doneTyping() {
 						    $('input.percentage').val(function(index, value) {
-						    	value = value.replace('%','');
+						    	value = value.replace('%',''); // make sure no percentages are contained if they typed after a timeout
 								if(value.charAt(value.length-1) != '%' && value.length != 0){
 									value = value + '%';
 								}
