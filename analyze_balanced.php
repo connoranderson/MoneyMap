@@ -65,6 +65,10 @@
 							var investment = processPercentage("<?php echo $_POST["investment"] ?>");// Value entered is a percentage
 							var homeownersTax = "<?php echo $_POST["homeowners_tax"] ?>"; // checkbox "on" or "off"
 							var tax_status_input = "<?php echo $_POST["tax_status"] ?>";
+							var mortgage_rate = processPercentage("<?php echo $_POST["mortgage_rate"] ?>");
+							var mortgage_length_input = "<?php echo $_POST["mortgage_length"] ?>";
+							var mortgage_length = 0;
+							var downpayment_percentage = processPercentage("<?php echo $_POST["downpayment"] ?>");
 
 							marketRate = investment; // Value entered is a percentage
 							var years = [];
@@ -79,6 +83,14 @@
 								tax_status = 2;
 							}else{
 								tax_status = 3;
+							}
+
+							if (mortgage_length_input == '10yr'){
+								mortgage_length = 10;
+							}else if(mortgage_length_input == '20yr'){
+								mortgage_length = 20;
+							}else{
+								mortgage_length = 30;
 							}
 
 							if (homeownersTax == 'on'){
@@ -121,18 +133,18 @@
 										salary[i] = salary[i-1]*(1+salary_appreciation);
 										afterTaxIncomeArr[i] = afterTaxIncome(salary[i],tax_status);
 
-										if (investment[i-1] > house_cost*0.2 && hasPurchased == 0){ // just purchased house
+										if (investment[i-1] > house_cost*downpayment_percentage && hasPurchased == 0){ // just purchased house
 											hasPurchased = 1;
 											housePurchasedYear = i+start_age;
 											
-											investment[i] = investment[i-1] - house_cost*0.2 + investment[i-1]*marketRate + afterTaxIncomeArr[i] - monthly_spending*12 - rent*12 - (propertyTax + homeownersInsurance)*house_value[i-1];
-											mortgage[i] = house_cost*0.8;
+											investment[i] = investment[i-1] - house_cost*downpayment_percentage + investment[i-1]*marketRate + afterTaxIncomeArr[i] - monthly_spending*12 - rent*12 - (propertyTax + homeownersInsurance)*house_value[i-1];
+											mortgage[i] = house_cost*(1-downpayment_percentage);
 											house_value[i] = house_value[i-1];
 											home_equity[i] = house_value[i] - mortgage[i];
 											interest[i] = 0;
 
 										}else if(hasPurchased == 1 && mortgage[i-1] > 0){ //assumes while you pay off house, you don't invest
-											interest[i] = mortgage[i-1] * 0.0377; // average mortgage rate
+											interest[i] = mortgage[i-1] * mortgage_rate; // average mortgage rate
 											mortgage[i] = mortgage[i-1] - afterTaxIncomeArr[i] + monthly_spending*12 +interest[i] + (propertyTax+homeownersInsurance)*house_value[i-1];
 											investment[i] = investment[i-1]*(1+marketRate);
 											if(mortgage[i] < 0){
