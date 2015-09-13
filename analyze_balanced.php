@@ -136,17 +136,19 @@
 										if (investment[i-1] > house_cost*downpayment_percentage && hasPurchased == 0){ // just purchased house
 											hasPurchased = 1;
 											housePurchasedYear = i+start_age;
-											
 											investment[i] = investment[i-1] - house_cost*downpayment_percentage + investment[i-1]*marketRate + afterTaxIncomeArr[i] - monthly_spending*12 - rent*12 - (propertyTax + homeownersInsurance)*house_value[i-1];
 											mortgage[i] = house_cost*(1-downpayment_percentage);
 											house_value[i] = house_value[i-1];
 											home_equity[i] = house_value[i] - mortgage[i];
 											interest[i] = 0;
+											// Calculate amount needed to pay each month to achieve desired payoff time
+											var mortgage_payment = mortgage[i]*(mortgage_rate*Math.pow((1+mortgage_rate),mortgage_length))/(Math.pow((1+mortgage_rate), mortgage_length) -1);
 
-										}else if(hasPurchased == 1 && mortgage[i-1] > 0){ //assumes while you pay off house, you don't invest
+
+										}else if(hasPurchased == 1 && mortgage[i-1] > 0){
 											interest[i] = mortgage[i-1] * mortgage_rate; // average mortgage rate
-											mortgage[i] = mortgage[i-1] - afterTaxIncomeArr[i] + monthly_spending*12 +interest[i] + (propertyTax+homeownersInsurance)*house_value[i-1];
-											investment[i] = investment[i-1]*(1+marketRate);
+											mortgage[i] = mortgage[i-1] - mortgage_payment + interest[i];
+											investment[i] = investment[i-1]*(1+marketRate) + afterTaxIncomeArr[i] - mortgage_payment - (propertyTax+homeownersInsurance)*house_value[i-1] - monthly_spending*12; // Leftover cash for investing = total - expenses - house costs
 											if(mortgage[i] < 0){
 												mortgage[i] = 0;
 											}
