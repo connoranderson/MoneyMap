@@ -4,6 +4,5 @@ To do:
 - Build sophisticated.html
 - Build analyze_sophisticated.php
 - Find a better way to handle individual expenses
-- Incorporate percentage of salary toward house payments, instead of all available cash
-- Variable mortgage interest rate
 - Better home page images and descriptions
+- Prevent bug of paying off home fast and running investments into negative
