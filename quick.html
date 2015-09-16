@@ -87,7 +87,7 @@
 							<h3> Starting Salary</h3>
 							
 								<div class="6u 12u$(xsmall)">
-									<input type="text" name="salary" id="salary" value="" placeholder="$60,000" required/>
+									<input type="text" class="number" name="salary" id="salary" value="" placeholder="$60,000" required/>
 								
 							</div>
 							
@@ -99,7 +99,7 @@
 							
 								<div class="6u 12u$(xsmall)">
 									<span title="Mortgage assumed at 3.77% interest rate">
-									<input type="text" name="house_cost" id="house_cost" value="" placeholder="$400,000" />
+									<input type="text" class="number" name="house_cost" id="house_cost" value="" placeholder="$400,000" />
 								</span>							
 								
 							</div>						
@@ -109,7 +109,7 @@
 							<h3> Rent Cost Per Month</h3>
 							
 								<div class="6u 12u$(xsmall)">
-									<input type="text" name="rent" id="rent" value="" placeholder="$1,500 / mo" required/>
+									<input type="text" class="number" name="rent" id="rent" value="" placeholder="$1,500 / mo" required/>
 								
 							</div>
 						</div>
@@ -117,7 +117,7 @@
 						<div class="row uniform">
 							<h3> Monthly Spending Level</h3>
 							<div class="6u 12u$(xsmall)">
-									<input type="text" name="monthly_spending" id="monthly_spending" value="" placeholder="$2,000 / mo" required/>
+									<input type="text" class="number" name="monthly_spending" id="monthly_spending" value="" placeholder="$2,000 / mo" required/>
 								
 							</div>
 							<p> <h1> <br></p><br>
@@ -163,6 +163,59 @@
 
 
 					</div>
+
+					<script src="assets/js/jquery.min.js"></script>
+						<script type="text/javascript">
+						$('input.number').keyup(function(event) {
+
+							// skip for arrow keys
+							if(event.which >= 37 && event.which <= 40){
+								event.preventDefault();
+							}
+
+							$(this).val(function(index, value) {
+								value = value.replace(/,/g,'');
+								finalValue = numberWithCommas(value);
+								if(finalValue.charAt(0) != '$'){
+									finalValue = '$' + finalValue;
+								}
+								return finalValue;
+							});
+						});
+
+						//setup before functions
+						var typingTimer;                //timer identifier
+						var doneTypingInterval = 2000;  //time in ms, 5 second for example
+						var $input = $('input.percentage');
+
+						//on keyup, start the countdown
+						$input.keyup(function(){
+						    clearTimeout(typingTimer);
+						    if ($input.val) {
+						        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+
+						    }
+						});
+
+						//user is "finished typing," do something
+						function doneTyping() {
+						    $('input.percentage').val(function(index, value) {
+						    	value = value.replace('%',''); // make sure no percentages are contained if they typed after a timeout
+								if(value.charAt(value.length-1) != '%' && value.length != 0){
+									value = value + '%';
+								}
+								return value;
+							});
+						}
+
+
+						function numberWithCommas(x) {
+							var parts = x.toString().split(".");
+							parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+							return parts.join(".");
+						}
+
+						</script>
 
 
 				</section>

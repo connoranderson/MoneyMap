@@ -43,6 +43,8 @@
 
 					<p>
 
+						<script src="assets/js/useful_functions.js"></script>
+
 						<center><h3>Net Worth</h3></center>
 
 						<script src="Chart.min.js"></script>
@@ -51,12 +53,12 @@
 
 						<script type="text/javascript">
 							// Load relevant variables
-							var start_age = parseInt("<?php echo $_POST["start"] ?>");
-							var retirement_age = parseInt("<?php echo $_POST["retirement"] ?>");
-							var starting_salary = parseInt("<?php echo $_POST["salary"] ?>");
-							var house_cost = parseInt("<?php echo $_POST["house_cost"] ?>");
-							var rent = parseInt("<?php echo $_POST["rent"] ?>");
-							var monthly_spending = parseInt("<?php echo $_POST["monthly_spending"] ?>");
+							var start_age = processNum("<?php echo $_POST["start"] ?>");
+							var retirement_age = processNum("<?php echo $_POST["retirement"] ?>");
+							var starting_salary = processNum("<?php echo $_POST["salary"] ?>");
+							var house_cost = processNum("<?php echo $_POST["house_cost"] ?>");
+							var rent = processNum("<?php echo $_POST["rent"] ?>");
+							var monthly_spending = processNum("<?php echo $_POST["monthly_spending"] ?>");
 							var investment_strategy = "<?php echo $_POST["investment"] ?>";
 							var years = [];
 							var duration = retirement_age-start_age; // Iterate 1 to final age							
