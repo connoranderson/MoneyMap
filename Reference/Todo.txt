@@ -4,11 +4,19 @@ To do:
 - Build sophisticated.html
 - Build analyze_sophisticated.php
 - Find a better way to handle individual expenses for sophisticated.html
-- Better home page images and descriptions
+
+To do (pre-preliminary launch):
 - Prevent bug of paying off home fast and running investments into negative
+- Integrate current savings and student debt parameters
+- Update favicon
 
 Domain Options:
 
 - mmap.ca
 - moneymap.cash
 - moneymap.fund
+- mapmoney.me
+- mapmoney.io
+- financialcalculator.io ($32.88)
+- financialcalculator.me ($8.99)
+- moneymapper.io
