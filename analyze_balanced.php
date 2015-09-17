@@ -418,7 +418,19 @@
 
 					</script>
 
-					<hr />
+					</br> </br> </br> </br> 
+
+					<center>
+						<ul class="actions vertical">
+							<li><a class="button" onclick="goBack()">Edit Parameters and Run Again</a></li>
+						</ul>
+					</center>
+
+					<script>
+					function goBack() {
+						window.history.back();
+					}
+					</script>
 
 					
 				</div>

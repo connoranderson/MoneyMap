@@ -6,3 +6,9 @@ To do:
 - Find a better way to handle individual expenses for sophisticated.html
 - Better home page images and descriptions
 - Prevent bug of paying off home fast and running investments into negative
+
+Domain Options:
+
+- mmap.ca
+- moneymap.cash
+- moneymap.fund
