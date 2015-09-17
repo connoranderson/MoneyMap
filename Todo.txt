@@ -3,6 +3,6 @@ To do:
 - Dropdowns with instructions under parameter inputs
 - Build sophisticated.html
 - Build analyze_sophisticated.php
-- Find a better way to handle individual expenses
+- Find a better way to handle individual expenses for sophisticated.html
 - Better home page images and descriptions
 - Prevent bug of paying off home fast and running investments into negative

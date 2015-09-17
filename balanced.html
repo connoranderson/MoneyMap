@@ -98,6 +98,25 @@
 							
 						</div>
 
+						<div class="row uniform">
+							<h3> Current Savings </h3>
+							
+							<div class="6u 12u$(xsmall)">
+								<input type="text" class="number" name="current_savings" id="current_savings" value="" placeholder="$10,000" required/>
+								
+							</div>
+							
+						</div>
+
+						<div class="row uniform">
+							<h3> Student Loan Balance </h3>
+							
+							<div class="6u 12u$(xsmall)">
+								<input type="text" class="number" name="studentloans" id="studentloans" value="" placeholder="$30,000" required/>
+								
+							</div>
+							
+						</div>
 
 						<div class="row uniform">
 							<h3> Starting Salary</h3>
@@ -118,6 +137,7 @@
 								<span title="Average annual salary increase in US is 2.9%">
 									<input type="text" class="percentage" name="salary_appreciation" id="salary_appreciation" value="" placeholder="2.9%" required/>
 								</span>
+							</br>
 
 							</div>
 
@@ -141,7 +161,7 @@
 									</div>
 								</div>
 							</center>
-							<br>
+							</br></br>
 						</section>
 
 						<div class="row uniform">
@@ -217,7 +237,7 @@
 						<div class="6u$ 12u$(small)">
 							<input type="checkbox" id="homeowners_tax" name="homeowners_tax">
 							<label for="homeowners_tax"> <h3>Include homeowners taxes </h3></label>
-							<br> 
+							
 						</div>
 
 						<div id="homeowner_expanded" style="display:none;" >
@@ -289,6 +309,7 @@
 								document.getElementById("investment").value = "6%";
 								document.getElementById("downpayment").value = "20%";
 								document.getElementById("mortgage_rate").value = "3.77%";
+								document.getElementById("studentloans").value = "$30,000";
 								
 							} 
 						};
