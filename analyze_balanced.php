@@ -69,6 +69,8 @@
 							var mortgage_length_input = "<?php echo $_POST["mortgage_length"] ?>";
 							var mortgage_length = 0;
 							var downpayment_percentage = processPercentage("<?php echo $_POST["downpayment"] ?>");
+							var current_savings = processNum("<?php echo $_POST["current_savings"] ?>");
+							var studentloans = processNum("<?php echo $_POST["studentloans"] ?>");
 
 							marketRate = investment; // Value entered is a percentage
 							var years = [];
@@ -124,9 +126,9 @@
 								for (var i = 0; i < duration; i++) {
 
 									if (i==0){
-										investment[i] = 0;
+										investment[i] = current_savings-studentloans;
 										mortgage[i] = 0;
-										netWorth[i] = 0;
+										netWorth[i] = investment[i]-mortgage[i];
 										interest[i] = 0;
 										afterTaxIncomeArr[i] = afterTaxIncome(starting_salary,tax_status);
 									}else{

@@ -60,6 +60,8 @@
 							var rent = processNum("<?php echo $_POST["rent"] ?>");
 							var monthly_spending = processNum("<?php echo $_POST["monthly_spending"] ?>");
 							var investment_strategy = "<?php echo $_POST["investment"] ?>";
+							var current_networth = processNum("<?php echo $_POST["current_networth"] ?>");
+
 							var years = [];
 							var duration = retirement_age-start_age; // Iterate 1 to final age							
 
@@ -91,7 +93,7 @@
 
 								for (var i = 0; i < duration; i++) {
 									if (i==0){
-										netWorth[i] = 0;
+										netWorth[i] = current_networth;
 										mortgage[0] = house_cost;
 									}else{
 
