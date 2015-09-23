@@ -10,6 +10,7 @@
 	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
 </head>
 <body>
+	<?php include_once("analyticstracking.php") ?>
 
 	<!-- Page Wrapper -->
 	<div id="page-wrapper">
@@ -256,7 +257,7 @@
 
 					<hr />
 
-					<center><h3>Mortgage Debt</h3></center>
+					<center><h3>Mortgage and Interest Debt</h3></center>
 					<h3 id = 'ylabel'>Mortgage</h3>
 					<script src="Chart.min.js"></script>
 					<canvas id="mortgageID" width="1200" height="600"></canvas>
@@ -296,7 +297,7 @@
 					<hr />
 
 
-					<center><h3>Salary Over Time</h3></center>
+					<center><h3>Salary and After-Tax Salary Over Time</h3></center>
 					<h3 id = 'ylabel'>Salary</h3>
 					<script src="Chart.min.js"></script>
 					<canvas id="salaryID" width="1200" height="600"></canvas>
@@ -395,22 +396,18 @@
 
 						new Chart(myChart).Line(data1,{
 							responsive: true,
-							multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
 						});		
 
 						new Chart(mortgageChart).Line(data2,{
 							responsive: true,
-							multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
 						});	
 
 						new Chart(salaryChart).Line(data3,{
 							responsive: true,
-							multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
 						});	
 
 						new Chart(equityChart).Line(data4,{
 							responsive: true,
-							multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
 						});	
 
 						new Chart(assetAllocationChart).Doughnut(data5,{
@@ -454,6 +451,7 @@
 		</footer>
 
 	</div>
+
 
 	<!-- Scripts -->
 	<script src="assets/js/jquery.min.js"></script>

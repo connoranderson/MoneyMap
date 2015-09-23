@@ -10,6 +10,7 @@
 	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
 </head>
 <body>
+	<?php include_once("analyticstracking.php") ?>
 
 	<!-- Page Wrapper -->
 	<div id="page-wrapper">
@@ -251,6 +252,7 @@
 		</footer>
 
 	</div>
+
 
 	<!-- Scripts -->
 	<script src="assets/js/jquery.min.js"></script>
