@@ -12,6 +12,15 @@
 <body>
 	<?php include_once("analyticstracking.php") ?>
 
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+
 	<!-- Page Wrapper -->
 	<div id="page-wrapper">
 
@@ -25,7 +34,10 @@
 						<div id="menu">
 							<ul>
 								<li><a href="index.html">Home</a></li>
-								<li><a href="form.html">Getting Started</a></li>
+							<li><a href="mode.html">Get Started</a></li>
+							<li><a href="quick.html">Quick</a></li>
+							<li><a href="balanced.html">Balanced</a></li>
+							<li><a href="sophisticated.html">Sophisticated</a></li>
 							</ul>
 						</div>
 					</li>
@@ -418,6 +430,8 @@
 					</script>
 
 					</br> </br> </br> </br> 
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<div class="fb-like" data-href="https://MyMoneyMap.me" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 
 					<center>
 						<ul class="actions vertical">
@@ -430,6 +444,7 @@
 						window.history.back();
 					}
 					</script>
+
 
 					
 				</div>

@@ -11,6 +11,14 @@
 </head>
 <body>
 	<?php include_once("analyticstracking.php") ?>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
 
 	<!-- Page Wrapper -->
 	<div id="page-wrapper">
@@ -25,7 +33,10 @@
 						<div id="menu">
 							<ul>
 								<li><a href="index.html">Home</a></li>
-								<li><a href="form.html">Getting Started</a></li>
+								<li><a href="mode.html">Get Started</a></li>
+								<li><a href="quick.html">Quick</a></li>
+								<li><a href="balanced.html">Balanced</a></li>
+								<li><a href="sophisticated.html">Sophisticated</a></li>
 							</ul>
 						</div>
 					</li>
@@ -195,36 +206,36 @@
 					<canvas id="mortgageID" width="1200" height="600"></canvas>
 
 					<script type="text/javascript">
-						var data2 = {
-							labels : years,
-							datasets : [
-							{
-								label: "Net Worth",
-								fillColor : "rgba(172,194,132,0.4)",
-								strokeColor : "#ACC26D",
-								pointColor : "#fff",
-								pointStrokeColor : "#9DB86D",
-								data : output[2],
-							},
-							]
-						};
+					var data2 = {
+						labels : years,
+						datasets : [
+						{
+							label: "Net Worth",
+							fillColor : "rgba(172,194,132,0.4)",
+							strokeColor : "#ACC26D",
+							pointColor : "#fff",
+							pointStrokeColor : "#9DB86D",
+							data : output[2],
+						},
+						]
+					};
 
-						var myChart = document.getElementById('myChart').getContext('2d');
-						var mortgageChart = document.getElementById('mortgageID').getContext('2d');
+					var myChart = document.getElementById('myChart').getContext('2d');
+					var mortgageChart = document.getElementById('mortgageID').getContext('2d');
 
 
-						window.onload = function(){
-						    
-						    new Chart(myChart).Line(data1,{
+					window.onload = function(){
+
+						new Chart(myChart).Line(data1,{
 							responsive: true,
 							multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
-							});		
+						});		
 
-						    new Chart(mortgageChart).Line(data2,{
+						new Chart(mortgageChart).Line(data2,{
 							responsive: true,
 							multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
-							});	
-						}
+						});	
+					}
 
 					</script>
 					<center><h3>Age</h3></center>
@@ -234,6 +245,24 @@
 					<h4>More Results</h4>
 					<p> Consider running a more advanced search next time to take into account taxes, mortgage interest rates, and other data for a more accurate and comprehensive analysis!</p>
 				</div>
+
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<div class="fb-like" data-href="https://mymoneymap.me" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+
+
+				<center>
+					<ul class="actions vertical">
+						<li><a class="button" onclick="goBack()">Edit Parameters and Run Again</a></li>
+					</ul>
+				</center>
+
+				<script>
+				function goBack() {
+					window.history.back();
+				}
+				</script>
+
+
 			</section>
 		</article>
 
